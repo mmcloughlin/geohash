@@ -1,0 +1,2 @@
+# geohash
+Go geohash library
