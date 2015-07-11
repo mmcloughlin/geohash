@@ -1,5 +1,5 @@
 # geohash
-Go geohash library
+Go [geohash](https://en.wikipedia.org/wiki/Geohash) library
 
 ## Alternatives
 
