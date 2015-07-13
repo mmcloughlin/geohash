@@ -13,3 +13,4 @@ Go [geohash](https://en.wikipedia.org/wiki/Geohash) library
 * https://github.com/yinqiwen/geohash-int
 * https://github.com/hkwi/python-geohash
 * https://github.com/sunng87/node-geohash
+* https://github.com/davetroy/geohash-js
