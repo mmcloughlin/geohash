@@ -1,6 +1,9 @@
 package geohash
 
-import "math"
+import (
+	"fmt"
+	"math"
+)
 
 // Encode the point (lat, lng) as a string geohash with the standard 12
 // characters of precision.
@@ -13,7 +16,8 @@ func Encode(lat, lng float64) string {
 func EncodeWithPrecision(lat, lng float64, chars uint) string {
 	bits := 5 * chars
 	inthash := EncodeIntWithPrecision(lat, lng, bits)
-	return base32encoding.Encode(inthash)
+	enc := base32encoding.Encode(inthash)
+	return fmt.Sprintf("%0*s", int(chars), enc)
 }
 
 // EncodeInt encodes the point (lat, lng) to a 64-bit integer geohash.

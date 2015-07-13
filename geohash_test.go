@@ -51,3 +51,13 @@ func TestWikipediaExample(t *testing.T) {
 		t.Errorf("incorrect encoding")
 	}
 }
+
+func TestLeadingZero(t *testing.T) {
+	h := EncodeWithPrecision(-74.761330, -140.309714, 6)
+	if 6 != len(h) {
+		t.Errorf("incorrect geohash length")
+	}
+	if "0fsnxn" != h {
+		t.Errorf("incorrect encoding")
+	}
+}
