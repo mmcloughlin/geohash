@@ -1,5 +1,41 @@
 package geohash
 
+import "math"
+
+// Encode the point (lat, lng) as a string geohash with the standard 12
+// characters of precision.
+func Encode(lat, lng float64) string {
+	return EncodeWithPrecision(lat, lng, 12)
+}
+
+// Encode the point (lat, lng) as a string geohash with the specified number
+// of characters of precision (max 12).
+func EncodeWithPrecision(lat, lng float64, chars uint) string {
+	bits := 5 * chars
+	inthash := EncodeIntWithPrecision(lat, lng, bits)
+	return base32encoding.Encode(inthash)
+}
+
+// EncodeInt encodes the point (lat, lng) to a 64-bit integer geohash.
+func EncodeInt(lat, lng float64) uint64 {
+	latInt := encodeRange(lat, 90)
+	lngInt := encodeRange(lng, 180)
+	return interleave(latInt, lngInt)
+}
+
+// EncodeIntWithPrecision encodes the point (lat, lng) to an integer with the
+// specified number of bits.
+func EncodeIntWithPrecision(lat, lng float64, bits uint) uint64 {
+	hash := EncodeInt(lat, lng)
+	return hash >> (64 - bits)
+}
+
+// Encode the position of x within the range -r to +r as a 32-bit integer.
+func encodeRange(x, r float64) uint32 {
+	p := (x + r) / (2 * r)
+	return uint32(p * math.Exp2(32))
+}
+
 // Spread out the 32 bits of x into 64 bits, where the bits of x occupy even
 // bit positions.
 func spread(x uint32) uint64 {

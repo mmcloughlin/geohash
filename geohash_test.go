@@ -44,3 +44,10 @@ func TestBase32Encode(t *testing.T) {
 		t.Errorf("incorrect base64 encoding")
 	}
 }
+
+func TestWikipediaExample(t *testing.T) {
+	h := EncodeWithPrecision(42.6, -5.6, 5)
+	if "ezs42" != h {
+		t.Errorf("incorrect encoding")
+	}
+}
