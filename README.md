@@ -1,6 +1,8 @@
 # geohash
 Go [geohash](https://en.wikipedia.org/wiki/Geohash) library
 
+> Work in progress.
+
 ## Alternatives
 
 * https://github.com/gansidui/geohash
