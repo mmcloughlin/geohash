@@ -2,12 +2,15 @@ package geohash
 
 import "testing"
 
+// TestCase objects are generated from independent code to verify we get the
+// same results. See testcases_test.go.
 type TestCase struct {
 	hashInt  uint64
 	hash     string
 	lat, lng float64
 }
 
+// Test we get the same string geohashes.
 func TestEncode(t *testing.T) {
 	for _, c := range testcases {
 		hash := Encode(c.lat, c.lng)
@@ -18,6 +21,7 @@ func TestEncode(t *testing.T) {
 	}
 }
 
+// Test we get the same integer geohashes.
 func TestEncodeInt(t *testing.T) {
 	for _, c := range testcases {
 		hashInt := EncodeInt(c.lat, c.lng)
