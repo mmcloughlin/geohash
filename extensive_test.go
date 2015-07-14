@@ -31,3 +31,17 @@ func TestEncodeInt(t *testing.T) {
 		}
 	}
 }
+
+// Verify the prefix property.
+func TestPrefixProperty(t *testing.T) {
+	for _, c := range testcases {
+		for chars := uint(1); chars <= 12; chars++ {
+			hash := EncodeWithPrecision(c.lat, c.lng, chars)
+			pre := c.hash[:chars]
+			if pre != hash {
+				t.Errorf("incorrect encode string result for (%v,%v) at precision %d: %s != %s",
+					c.lat, c.lng, chars, pre, hash)
+			}
+		}
+	}
+}
