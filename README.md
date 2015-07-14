@@ -1,4 +1,7 @@
 # geohash
+
+[![Build status](https://img.shields.io/travis/mmcloughlin/geohash.svg?style=flat-square)](https://travis-ci.org/mmcloughlin/geohash)
+
 Go [geohash](https://en.wikipedia.org/wiki/Geohash) library
 
 > Work in progress.
