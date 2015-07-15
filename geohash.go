@@ -52,6 +52,21 @@ func (b Box) Contains(lat, lng float64) bool {
 		b.MinLng <= lng && lng <= b.MaxLng)
 }
 
+// Return the minimum number of decimal places such that there must exist an
+// number with that many places within any range of width r. This is intended
+// for returning minimal precision coordinates inside a box.
+func minDecimalPlaces(r float64) int {
+	return int(math.Floor(math.Log10(r)))
+}
+
+func (b Box) Round() (lat, lng float64) {
+	m := minDecimalPlaces(b.MaxLat - b.MinLat)
+	lat = math.Ceil(b.MinLat/math.Pow10(m)) * math.Pow10(m)
+	m = minDecimalPlaces(b.MaxLng - b.MinLng)
+	lng = math.Ceil(b.MinLng/math.Pow10(m)) * math.Pow10(m)
+	return
+}
+
 func errorWithPrecision(bits uint) (latErr, lngErr float64) {
 	latBits := bits / 2
 	lngBits := bits - latBits
@@ -82,12 +97,12 @@ func BoundingBoxIntWithPrecision(hash uint64, bits uint) Box {
 
 func Decode(hash string) (lat, lng float64) {
 	box := BoundingBox(hash)
-	return box.Center()
+	return box.Round()
 }
 
 func DecodeIntWithPrecision(hash uint64, bits uint) (lat, lng float64) {
 	box := BoundingBoxIntWithPrecision(hash, bits)
-	return box.Center()
+	return box.Round()
 }
 
 func DecodeInt(hash uint64) (lat, lng float64) {

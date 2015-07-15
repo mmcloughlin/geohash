@@ -1,6 +1,11 @@
 package geohash
 
-import "testing"
+import (
+	"math"
+	"math/rand"
+	"testing"
+	"testing/quick"
+)
 
 func TestInterleaving(t *testing.T) {
 	cases := []struct {
@@ -42,6 +47,30 @@ func TestBase32Encode(t *testing.T) {
 	s := base32encoding.Encode(0xdfe082)
 	if "ezs42" != s {
 		t.Errorf("incorrect base64 encoding")
+	}
+}
+
+func RandomBox() Box {
+	lat1 := -90 + 180*rand.Float64()
+	lat2 := -90 + 180*rand.Float64()
+	lng1 := -180 + 360*rand.Float64()
+	lng2 := -180 + 360*rand.Float64()
+	return Box{
+		MinLat: math.Min(lat1, lat2),
+		MaxLat: math.Max(lat1, lat2),
+		MinLng: math.Min(lng1, lng2),
+		MaxLng: math.Max(lng1, lng2),
+	}
+}
+
+func TestBoxRound(t *testing.T) {
+	f := func() bool {
+		b := RandomBox()
+		lat, lng := b.Round()
+		return b.Contains(lat, lng)
+	}
+	if err := quick.Check(f, nil); err != nil {
+		t.Error(err)
 	}
 }
 
