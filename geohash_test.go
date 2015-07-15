@@ -45,6 +45,19 @@ func TestBase32Encode(t *testing.T) {
 	}
 }
 
+func TestBoxCenter(t *testing.T) {
+	b := Box{
+		MinLat: 1,
+		MaxLat: 2,
+		MinLng: 3,
+		MaxLng: 4,
+	}
+	lat, lng := b.Center()
+	if 1.5 != lat || 3.5 != lng {
+		t.Errorf("incorrect box center")
+	}
+}
+
 func TestBoxContains(t *testing.T) {
 	b := Box{
 		MinLat: 1,
