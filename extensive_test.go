@@ -71,3 +71,15 @@ func TestDecode(t *testing.T) {
 		}
 	}
 }
+
+// Test roundtrip decoding then encoding again.
+func TestDecodeThenEncode(t *testing.T) {
+	for _, c := range decodecases {
+		precision := uint(len(c.hash))
+		lat, lng := Decode(c.hash)
+		rehashed := EncodeWithPrecision(lat, lng, precision)
+		if c.hash != rehashed {
+			t.Errorf("hash %s decoded and re-encoded to %s", c.hash, rehashed)
+		}
+	}
+}
