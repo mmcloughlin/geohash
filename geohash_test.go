@@ -45,6 +45,34 @@ func TestBase32Encode(t *testing.T) {
 	}
 }
 
+func TestBoxContains(t *testing.T) {
+	b := Box{
+		MinLat: 1,
+		MaxLat: 2,
+		MinLng: 3,
+		MaxLng: 4,
+	}
+	cases := []struct {
+		lat, lng float64
+		expect   bool
+	}{
+		{1.5, 3.5, true},
+		{0.5, 3.5, false},
+		{7.0, 3.5, false},
+		{1.5, 1.5, false},
+		{1.5, 9.5, false},
+		{1, 3, true},
+		{1, 4, true},
+		{2, 3, true},
+		{2, 4, true},
+	}
+	for _, c := range cases {
+		if c.expect != b.Contains(c.lat, c.lng) {
+			t.Errorf("contains %f,%f should be %t", c.lat, c.lng, c.expect)
+		}
+	}
+}
+
 func TestWikipediaExample(t *testing.T) {
 	h := EncodeWithPrecision(42.6, -5.6, 5)
 	if "ezs42" != h {

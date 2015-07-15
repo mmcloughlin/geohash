@@ -34,10 +34,77 @@ func EncodeIntWithPrecision(lat, lng float64, bits uint) uint64 {
 	return hash >> (64 - bits)
 }
 
+type Box struct {
+	MinLat float64
+	MaxLat float64
+	MinLng float64
+	MaxLng float64
+}
+
+func (b Box) Center() (lat, lng float64) {
+	lat = (b.MinLat + b.MaxLat) / 2.0
+	lng = (b.MinLng + b.MaxLng) / 2.0
+	return
+}
+
+func (b Box) Contains(lat, lng float64) bool {
+	return (b.MinLat <= lat && lat <= b.MaxLat &&
+		b.MinLng <= lng && lng <= b.MaxLng)
+}
+
+func errorWithPrecision(bits uint) (latErr, lngErr float64) {
+	latBits := bits / 2
+	lngBits := bits - latBits
+	latErr = 180.0 / math.Exp2(float64(latBits))
+	lngErr = 360.0 / math.Exp2(float64(lngBits))
+	return
+}
+
+func BoundingBox(hash string) Box {
+	bits := uint(5 * len(hash))
+	inthash := base32encoding.Decode(hash)
+	return BoundingBoxIntWithPrecision(inthash, bits)
+}
+
+func BoundingBoxIntWithPrecision(hash uint64, bits uint) Box {
+	fullHash := hash << (64 - bits)
+	latInt, lngInt := deinterleave(fullHash)
+	lat := decodeRange(latInt, 90)
+	lng := decodeRange(lngInt, 180)
+	latErr, lngErr := errorWithPrecision(bits)
+	return Box{
+		MinLat: lat,
+		MaxLat: lat + latErr,
+		MinLng: lng,
+		MaxLng: lng + lngErr,
+	}
+}
+
+func Decode(hash string) (lat, lng float64) {
+	box := BoundingBox(hash)
+	return box.Center()
+}
+
+func DecodeIntWithPrecision(hash uint64, bits uint) (lat, lng float64) {
+	box := BoundingBoxIntWithPrecision(hash, bits)
+	return box.Center()
+}
+
+func DecodeInt(hash uint64) (lat, lng float64) {
+	return DecodeIntWithPrecision(hash, 64)
+}
+
 // Encode the position of x within the range -r to +r as a 32-bit integer.
 func encodeRange(x, r float64) uint32 {
 	p := (x + r) / (2 * r)
 	return uint32(p * math.Exp2(32))
+}
+
+// Decode the 32-bit range encoding X back to a value in the range -r to +r.
+func decodeRange(X uint32, r float64) float64 {
+	p := float64(X) / math.Exp2(32)
+	x := 2*r*p - r
+	return x
 }
 
 // Spread out the 32 bits of x into 64 bits, where the bits of x occupy even
