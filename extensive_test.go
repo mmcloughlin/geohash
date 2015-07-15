@@ -46,12 +46,28 @@ func TestPrefixProperty(t *testing.T) {
 	}
 }
 
-// Test decoding string geohashes.
-func TestDecode(t *testing.T) {
+// Test bounding boxes for string geohashes.
+func TestBoundingBox(t *testing.T) {
 	for _, c := range testcases {
 		box := BoundingBox(c.hash)
 		if !box.Contains(c.lat, c.lng) {
 			t.Errorf("incorrect bounding box for %s", c.hash)
+		}
+	}
+}
+
+type DecodeTestCase struct {
+	hash string
+	box  Box
+}
+
+// Test decoding at various precisions.
+func TestDecode(t *testing.T) {
+	for _, c := range decodecases {
+		lat, lng := Decode(c.hash)
+		if !c.box.Contains(lat, lng) {
+			t.Errorf("hash %s decoded to %f,%f should lie in %+v",
+				c.hash, lat, lng, c.box)
 		}
 	}
 }
