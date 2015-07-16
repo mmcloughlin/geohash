@@ -56,6 +56,16 @@ func TestBoundingBox(t *testing.T) {
 	}
 }
 
+// Test bounding boxes for integer geohashes.
+func TestBoundingBoxInt(t *testing.T) {
+	for _, c := range testcases {
+		box := BoundingBoxInt(c.hashInt)
+		if !box.Contains(c.lat, c.lng) {
+			t.Errorf("incorrect bounding box for 0x%x", c.hashInt)
+		}
+	}
+}
+
 type DecodeTestCase struct {
 	hash string
 	box  Box

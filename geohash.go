@@ -95,6 +95,10 @@ func BoundingBoxIntWithPrecision(hash uint64, bits uint) Box {
 	}
 }
 
+func BoundingBoxInt(hash uint64) Box {
+	return BoundingBoxIntWithPrecision(hash, 64)
+}
+
 func Decode(hash string) (lat, lng float64) {
 	box := BoundingBox(hash)
 	return box.Round()
