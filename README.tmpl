@@ -1,10 +1,11 @@
 # geohash
 
+Go [geohash](https://en.wikipedia.org/wiki/Geohash) library offering encoding
+and decoding for string and integer geohashes.
+
 [![GoDoc Reference](http://img.shields.io/badge/godoc-reference-5272B4.svg?style=flat-square)](http://godoc.org/github.com/mmcloughlin/geohash)
 [![Build status](https://img.shields.io/travis/mmcloughlin/geohash.svg?style=flat-square)](https://travis-ci.org/mmcloughlin/geohash)
 [![Coverage](https://img.shields.io/coveralls/mmcloughlin/geohash.svg?style=flat-square)](https://coveralls.io/r/mmcloughlin/geohash)
-
-Go [geohash](https://en.wikipedia.org/wiki/Geohash) library
 
 ## Install
 
