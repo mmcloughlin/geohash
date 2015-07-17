@@ -1,6 +1,9 @@
 package geohash
 
-import "testing"
+import (
+	"math"
+	"testing"
+)
 
 // TestCase objects are generated from independent code to verify we get the
 // same results. See testcases_test.go.
@@ -62,6 +65,19 @@ func TestBoundingBoxInt(t *testing.T) {
 		box := BoundingBoxInt(c.hashInt)
 		if !box.Contains(c.lat, c.lng) {
 			t.Errorf("incorrect bounding box for 0x%x", c.hashInt)
+		}
+	}
+}
+
+// Crude test of integer decoding.
+func TestDecodeInt(t *testing.T) {
+	for _, c := range testcases {
+		lat, lng := DecodeInt(c.hashInt)
+		if math.Abs(lat-c.lat) > 0.0000001 {
+			t.Errorf("large error in decoded latitude for 0x%x", c.hashInt)
+		}
+		if math.Abs(lng-c.lng) > 0.0000001 {
+			t.Errorf("large error in decoded longitude for 0x%x", c.hashInt)
 		}
 	}
 }
