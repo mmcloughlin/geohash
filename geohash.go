@@ -1,3 +1,5 @@
+// Package geohash provides encoding and decoding of string and integer
+// geohashes.
 package geohash
 
 import (
