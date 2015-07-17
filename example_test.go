@@ -1,8 +1,12 @@
-package geohash
+package geohash_test
 
-import "fmt"
+import (
+	"fmt"
+
+	"github.com/mmcloughlin/geohash"
+)
 
 func ExampleEncode() {
-	fmt.Println(Encode(48.858, 2.294))
+	fmt.Println(geohash.Encode(48.858, 2.294))
 	// Output: u09tunq6qp66
 }
