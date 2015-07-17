@@ -6,7 +6,19 @@
 
 Go [geohash](https://en.wikipedia.org/wiki/Geohash) library
 
-> Work in progress.
+## Install
+
+Fetch the package with
+
+```
+go get github.com/mmcloughlin/geohash
+```
+
+And import it into your programs with
+
+```go
+import github.com/mmcloughlin/geohash
+```
 
 ## Usage
 
