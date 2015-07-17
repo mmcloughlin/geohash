@@ -6,6 +6,20 @@ import (
 	"github.com/mmcloughlin/geohash"
 )
 
+func Example() {
+	lat, lng := -25.345457, 131.036192 // Uluru
+
+	// Encode a full 12 character string geohash
+	fmt.Println(geohash.Encode(lat, lng))
+
+	// Or at lower precision
+	fmt.Println(geohash.EncodeWithPrecision(lat, lng, 6))
+
+	// Output:
+	// qgmpvf18h86e
+	// qgmpvf
+}
+
 func ExampleEncode() {
 	fmt.Println(geohash.Encode(48.858, 2.294))
 	// Output: u09tunq6qp66
