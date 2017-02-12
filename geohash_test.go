@@ -131,3 +131,60 @@ func TestLeadingZero(t *testing.T) {
 		t.Errorf("incorrect encoding")
 	}
 }
+
+func TestNeighbors(t *testing.T) {
+	for _, c := range neighborsTestCases {
+		neighbors := Neighbors(c.hashStr)
+		for i, neighbor := range neighbors {
+			expected := c.hashStrNeighbors[i]
+			if neighbor != expected {
+				t.Errorf("actual: %v \n expected: %v\n", neighbors, c.hashStrNeighbors)
+				break
+			}
+		}
+	}
+}
+
+func TestNeighborsInt(t *testing.T) {
+	cases := []struct {
+		hash      uint64
+		neighbors []uint64
+	}{
+		{
+			hash: 6456360425798343065,
+			neighbors: []uint64{
+				6456360425798343068,
+				6456360425798343070,
+				6456360425798343067,
+				6456360425798343066,
+				6456360425798343064,
+				6456360425798343058,
+				6456360425798343059,
+				6456360425798343062,
+			},
+		},
+	}
+
+	for _, c := range cases {
+		neighbors := NeighborsInt(c.hash)
+		for i, neighbor := range neighbors {
+			expected := c.neighbors[i]
+			if neighbor != c.neighbors[i] {
+				t.Errorf("neighbor: %v does not match expected: %v", neighbor, expected)
+			}
+		}
+	}
+}
+
+func TestNeighborsIntWithPrecision(t *testing.T) {
+	for _, c := range neighborsTestCases {
+		neighbors := NeighborsIntWithPrecision(c.hashInt, c.hashIntBitDepth)
+		for i, neighbor := range neighbors {
+			expected := c.hashIntNeighbors[i]
+			if neighbor != expected {
+				t.Errorf("actual: %v \n expected: %v\n", neighbors, c.hashIntNeighbors)
+				break
+			}
+		}
+	}
+}
