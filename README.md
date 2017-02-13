@@ -77,6 +77,30 @@ func EncodeWithPrecision(lat, lng float64, chars uint) string
 EncodeWithPrecision encodes the point (lat, lng) as a string geohash with the
 specified number of characters of precision (max 12).
 
+#### func  Neighbors
+
+```go
+func Neighbors(hash string) []string
+```
+Neighbors returns a slice of geohash strings that correspond to the provided
+geohash's neighbors.
+
+#### func  NeighborsInt
+
+```go
+func NeighborsInt(hash uint64) []uint64
+```
+NeighborsInt returns a slice of uint64s that correspond to the provided hash's
+neighbors at 64-bit precision.
+
+#### func  NeighborsIntWithPrecision
+
+```go
+func NeighborsIntWithPrecision(hash uint64, bits uint) []uint64
+```
+NeighborsIntWithPrecision returns a slice of uint64s that correspond to the
+provided hash's neighbors at the given precision.
+
 #### type Box
 
 ```go
@@ -142,7 +166,7 @@ precision.
 * https://github.com/corsc/go-geohash
 * https://github.com/pierrre/geohash
 * https://github.com/keshavdv/go-geohash
- 
+
 ## Reference
 
 * https://github.com/yinqiwen/geohash-int
