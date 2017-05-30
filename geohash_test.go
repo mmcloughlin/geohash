@@ -43,7 +43,7 @@ func TestBase32Decode(t *testing.T) {
 
 func TestBase32Encode(t *testing.T) {
 	s := base32encoding.Encode(0xdfe082)
-	if "ezs42" != s {
+	if "0000000ezs42" != s {
 		t.Errorf("incorrect base64 encoding")
 	}
 }
