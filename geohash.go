@@ -19,13 +19,6 @@ func EncodeWithPrecision(lat, lng float64, chars uint) string {
 	return enc[12-chars:]
 }
 
-// EncodeInt encodes the point (lat, lng) to a 64-bit integer geohash.
-func EncodeInt(lat, lng float64) uint64 {
-	latInt := encodeRange(lat, 90)
-	lngInt := encodeRange(lng, 180)
-	return interleave(latInt, lngInt)
-}
-
 // EncodeIntWithPrecision encodes the point (lat, lng) to an integer with the
 // specified number of bits.
 func EncodeIntWithPrecision(lat, lng float64, bits uint) uint64 {
