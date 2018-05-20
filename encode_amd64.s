@@ -1,7 +1,7 @@
 #include "textflag.h"
 
-// func EncodeInt(lat, lng float64) uint64
-TEXT ·EncodeInt(SB),NOSPLIT,$0
+// func encodeIntAsm(lat, lng float64) uint64
+TEXT ·encodeIntAsm(SB),NOSPLIT,$0
 #define LATF	X0
 #define LATI	R8
 #define LNGF	X1

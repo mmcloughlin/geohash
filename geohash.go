@@ -2,7 +2,10 @@
 // geohashes.
 package geohash
 
-import "math"
+import (
+	"fmt"
+	"math"
+)
 
 // Encode the point (lat, lng) as a string geohash with the standard 12
 // characters of precision.
@@ -17,6 +20,16 @@ func EncodeWithPrecision(lat, lng float64, chars uint) string {
 	inthash := EncodeIntWithPrecision(lat, lng, bits)
 	enc := base32encoding.Encode(inthash)
 	return enc[12-chars:]
+}
+
+// encodeIntGeneric provides a Go implementation of integer geohash. The
+// definition of the public EncodeInt function is in architecture specific
+// files.
+func encodeIntGeneric(lat, lng float64) uint64 {
+	fmt.Println("generic")
+	latInt := encodeRange(lat, 90)
+	lngInt := encodeRange(lng, 180)
+	return interleave(latInt, lngInt)
 }
 
 // EncodeIntWithPrecision encodes the point (lat, lng) to an integer with the
