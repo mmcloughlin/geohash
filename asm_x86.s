@@ -1,3 +1,5 @@
+// +build amd64,go1.6
+
 #include "textflag.h"
 
 // func cpuid(eaxArg, ecxArg uint32) (eax, ebx, ecx, edx uint32)
