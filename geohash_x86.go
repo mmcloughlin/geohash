@@ -1,4 +1,4 @@
-// +build go1.6
+// +build amd64,go1.6
 
 package geohash
 
