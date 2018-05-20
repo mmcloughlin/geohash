@@ -10,6 +10,7 @@ go:
   - 1.10.x
   - tip
 before_install:
+  - cat /proc/cpuinfo
   - go get github.com/axw/gocov/gocov
   - go get github.com/mattn/goveralls
   - go get golang.org/x/tools/cmd/cover
