@@ -14,9 +14,9 @@ TEXT ·cpuid(SB), NOSPLIT, $0-24
 	RET
 
 // func EncodeInt(lat, lng float64) uint64
-TEXT ·EncodeInt(SB),NOSPLIT,$0
+TEXT ·EncodeInt(SB), NOSPLIT, $0
 	CMPB ·useAsm(SB), $1
-	JNE fallback
+	JNE  fallback
 
 #define LATF	X0
 #define LATI	R8
@@ -40,8 +40,8 @@ TEXT ·EncodeInt(SB),NOSPLIT,$0
 	MOVQ LNGF, LNGI
 	SHRQ $20, LNGI
 
-	MOVQ LATF, LATI
-	SHRQ $20, LATI
+	MOVQ  LATF, LATI
+	SHRQ  $20, LATI
 	PDEPQ MASK, LATI, GHSH
 
 	PDEPQ MASK, LNGI, TEMP
@@ -53,4 +53,4 @@ TEXT ·EncodeInt(SB),NOSPLIT,$0
 	RET
 
 fallback:
-	JMP  ·encodeInt(SB)
+	JMP ·encodeInt(SB)
