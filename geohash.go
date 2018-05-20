@@ -3,7 +3,6 @@
 package geohash
 
 import (
-	"fmt"
 	"math"
 )
 
@@ -26,7 +25,6 @@ func EncodeWithPrecision(lat, lng float64, chars uint) string {
 // definition of the public EncodeInt function is in architecture specific
 // files.
 func encodeIntGeneric(lat, lng float64) uint64 {
-	fmt.Println("generic")
 	latInt := encodeRange(lat, 90)
 	lngInt := encodeRange(lng, 180)
 	return interleave(latInt, lngInt)
