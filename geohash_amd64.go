@@ -1,3 +1,5 @@
+// +build go1.6
+
 package geohash
 
 // useAsm flag determines whether the assembly version of EncodeInt will be
