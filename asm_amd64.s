@@ -1,7 +1,21 @@
 #include "textflag.h"
 
-// func encodeIntAsm(lat, lng float64) uint64
-TEXT ·encodeIntAsm(SB),NOSPLIT,$0
+// func cpuid(eaxArg, ecxArg uint32) (eax, ebx, ecx, edx uint32)
+TEXT ·cpuid(SB), NOSPLIT, $0-24
+	MOVL eaxArg+0(FP), AX
+	MOVL ecxArg+4(FP), CX
+	CPUID
+	MOVL AX, eax+8(FP)
+	MOVL BX, ebx+12(FP)
+	MOVL CX, ecx+16(FP)
+	MOVL DX, edx+20(FP)
+	RET
+
+// func EncodeInt(lat, lng float64) uint64
+TEXT ·EncodeInt(SB),NOSPLIT,$0
+	CMPB ·useAsm(SB), $1
+	JNE fallback
+
 #define LATF	X0
 #define LATI	R8
 #define LNGF	X1
@@ -35,3 +49,6 @@ TEXT ·encodeIntAsm(SB),NOSPLIT,$0
 
 	MOVQ GHSH, ret+16(FP)
 	RET
+
+fallback:
+	JMP  ·encodeInt(SB)

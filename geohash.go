@@ -21,10 +21,13 @@ func EncodeWithPrecision(lat, lng float64, chars uint) string {
 	return enc[12-chars:]
 }
 
-// encodeIntGeneric provides a Go implementation of integer geohash. The
-// definition of the public EncodeInt function is in architecture specific
-// files.
-func encodeIntGeneric(lat, lng float64) uint64 {
+// EncodeInt encodes the point (lat, lng) to a 64-bit integer geohash.
+func EncodeInt(lat, lng float64) uint64
+
+// encodeInt provides a Go implementation of integer geohash. This is the
+// default implementation of EncodeInt, but optimized versions are provided
+// for certain architectures.
+func encodeInt(lat, lng float64) uint64 {
 	latInt := encodeRange(lat, 90)
 	lngInt := encodeRange(lng, 180)
 	return interleave(latInt, lngInt)
