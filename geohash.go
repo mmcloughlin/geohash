@@ -84,10 +84,11 @@ func (b Box) Round() (lat, lng float64) {
 // errorWithPrecision returns the error range in latitude and longitude for in
 // integer geohash with bits of precision.
 func errorWithPrecision(bits uint) (latErr, lngErr float64) {
-	latBits := bits / 2
-	lngBits := bits - latBits
-	latErr = 180.0 / math.Exp2(float64(latBits))
-	lngErr = 360.0 / math.Exp2(float64(lngBits))
+	b := int(bits)
+	latBits := b / 2
+	lngBits := b - latBits
+	latErr = math.Ldexp(180.0, -latBits)
+	lngErr = math.Ldexp(360.0, -lngBits)
 	return
 }
 
