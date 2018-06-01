@@ -23,8 +23,8 @@ TEXT ·cpuid(SB), NOSPLIT, $0-24
 #define BITS	CX
 #define LATB	R12
 #define LNGB	R13
-#define LATE	R14
-#define LNGE	R15
+#define LATE	X2
+#define LNGE	X3
 
 // func EncodeInt(lat, lng float64) uint64
 TEXT ·EncodeInt(SB), NOSPLIT, $0
@@ -96,9 +96,26 @@ TEXT ·BoundingBoxIntWithPrecision(SB), NOSPLIT, $0
 	MOVQ BITS, LATB
 	SHRQ $1, LATB
 
+	MOVQ $1023, TEMP
+	SUBQ LATB, TEMP
+	SHLQ $52, TEMP
+	MOVQ TEMP, LATE
+	MULSD $(180.0), LATE
+
+	MOVQ BITS, LNGB
+	SUBQ LATB, LNGB
+
+	MOVQ $1023, TEMP
+	SUBQ LNGB, TEMP
+	SHLQ $52, TEMP
+	MOVQ TEMP, LNGE
+	MULSD $(360.0), LNGE
+
 	MOVSD LATF, ret+16(FP)
-	MOVSD LNGF, ret+24(FP)
+	ADDSD LATE, LATF
+	MOVSD LATF, ret+24(FP)
 	MOVSD LNGF, ret+32(FP)
+	ADDSD LNGE, LNGF
 	MOVSD LNGF, ret+40(FP)
 	RET
 
