@@ -101,7 +101,10 @@ func BoundingBox(hash string) Box {
 
 // BoundingBoxIntWithPrecision returns the region encoded by the integer
 // geohash with the specified precision.
-func BoundingBoxIntWithPrecision(hash uint64, bits uint) Box {
+func BoundingBoxIntWithPrecision(hash uint64, bits uint) Box
+
+// boundingBoxIntWithPrecision provides a Go implementation of decoding.
+func boundingBoxIntWithPrecision(hash uint64, bits uint) Box {
 	fullHash := hash << (64 - bits)
 	latInt, lngInt := deinterleave(fullHash)
 	lat := decodeRange(latInt, 90)

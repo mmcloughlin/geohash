@@ -5,3 +5,6 @@
 
 TEXT ·EncodeInt(SB), NOSPLIT, $0
 	JMP ·encodeInt(SB)
+
+TEXT ·BoundingBoxIntWithPrecision(SB), NOSPLIT, $0
+	JMP ·boundingBoxIntWithPrecision(SB)
