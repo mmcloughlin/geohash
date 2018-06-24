@@ -98,6 +98,17 @@ func TestDecode(t *testing.T) {
 	}
 }
 
+// Test decoding at various precisions.
+func TestDecodeCenter(t *testing.T) {
+	for _, c := range decodecases {
+		lat, lng := DecodeCenter(c.hash)
+		if !c.box.Contains(lat, lng) {
+			t.Errorf("hash %s decoded to %f,%f should lie in %+v",
+				c.hash, lat, lng, c.box)
+		}
+	}
+}
+
 // Test roundtrip decoding then encoding again.
 func TestDecodeThenEncode(t *testing.T) {
 	for _, c := range decodecases {

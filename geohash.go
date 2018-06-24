@@ -127,6 +127,12 @@ func Decode(hash string) (lat, lng float64) {
 	return box.Round()
 }
 
+// DecodeCenter the string geohash to a (lat, lng) point.
+func DecodeCenter(hash string) (lat, lng float64) {
+	box := BoundingBox(hash)
+	return box.Center()
+}
+
 // DecodeIntWithPrecision decodes the provided integer geohash with bits of
 // precision to a (lat, lng) point.
 func DecodeIntWithPrecision(hash uint64, bits uint) (lat, lng float64) {
