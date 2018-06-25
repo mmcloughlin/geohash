@@ -127,7 +127,7 @@ func Decode(hash string) (lat, lng float64) {
 	return box.Round()
 }
 
-// DecodeCenter the string geohash to a (lat, lng) point.
+// DecodeCenter decodes the string geohash to the central point of the bounding box.
 func DecodeCenter(hash string) (lat, lng float64) {
 	box := BoundingBox(hash)
 	return box.Center()
