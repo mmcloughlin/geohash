@@ -31,6 +31,14 @@ func Decode(hash string) (lat, lng float64)
 ```
 Decode the string geohash to a (lat, lng) point.
 
+#### func  DecodeCenter
+
+```go
+func DecodeCenter(hash string) (lat, lng float64)
+```
+DecodeCenter decodes the string geohash to the central point of the bounding
+box.
+
 #### func  DecodeInt
 
 ```go
@@ -76,6 +84,30 @@ func EncodeWithPrecision(lat, lng float64, chars uint) string
 ```
 EncodeWithPrecision encodes the point (lat, lng) as a string geohash with the
 specified number of characters of precision (max 12).
+
+#### func  Neighbor
+
+```go
+func Neighbor(hash string, direction Direction) string
+```
+Neighbor returns a geohash string that corresponds to the provided geohash's
+neighbor in the provided direction
+
+#### func  NeighborInt
+
+```go
+func NeighborInt(hash uint64, direction Direction) uint64
+```
+NeighborInt returns a uint64 that corresponds to the provided hash's neighbor in
+the provided direction at 64-bit precision.
+
+#### func  NeighborIntWithPrecision
+
+```go
+func NeighborIntWithPrecision(hash uint64, bits uint, direction Direction) uint64
+```
+NeighborIntWithPrecision returns a uint64s that corresponds to the provided
+hash's neighbor in the provided direction at the given precision.
 
 #### func  Neighbors
 
@@ -158,3 +190,25 @@ func (b Box) Round() (lat, lng float64)
 ```
 Round returns a point inside the box, making an effort to round to minimal
 precision.
+
+#### type Direction
+
+```go
+type Direction int
+```
+
+Direction represents directions in the latitute/longitude space.
+
+```go
+const (
+	North Direction = iota
+	NorthEast
+	East
+	SouthEast
+	South
+	SouthWest
+	West
+	NorthWest
+)
+```
+Cardinal and intercardinal directions

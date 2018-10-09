@@ -173,3 +173,41 @@ func TestNeighborsIntWithPrecision(t *testing.T) {
 		}
 	}
 }
+
+func TestNeighbor(t *testing.T) {
+	c := neighborsTestCases[0]
+	neighbor := Neighbor(c.hashStr, North)
+	expected := c.hashStrNeighbors[North]
+	if neighbor != expected {
+		t.Errorf("actual: %v \n expected: %v\n", neighbor, expected)
+	}
+}
+
+func TestNeighborInt(t *testing.T) {
+	cases := []struct {
+		hash         uint64
+		neighborEast uint64
+	}{
+		{
+			hash:         6456360425798343065,
+			neighborEast: 6456360425798343067,
+		},
+	}
+
+	for _, c := range cases {
+		neighbor := NeighborInt(c.hash, East)
+		expected := c.neighborEast
+		if neighbor != expected {
+			t.Errorf("actual: %v \n expected: %v\n", neighbor, expected)	
+		}
+	}
+}
+
+func TestNeighborIntWithPrecision(t *testing.T) {
+	c := neighborsTestCases[0]
+	neighbor := NeighborIntWithPrecision(c.hashInt, c.hashIntBitDepth, South)
+	expected := c.hashIntNeighbors[South]
+	if neighbor != expected {
+		t.Errorf("actual: %v \n expected: %v\n", neighbor, expected)
+	}
+}
