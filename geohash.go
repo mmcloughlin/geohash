@@ -3,6 +3,8 @@
 package geohash
 
 import (
+	"errors"
+	"fmt"
 	"math"
 )
 
@@ -134,6 +136,23 @@ func BoundingBoxIntWithPrecision(hash uint64, bits uint) Box {
 // geohash.
 func BoundingBoxInt(hash uint64) Box {
 	return BoundingBoxIntWithPrecision(hash, 64)
+}
+
+// Validate the string geohash.
+func Validate(hash string) error {
+	// Check length.
+	if 5*len(hash) > 64 {
+		return errors.New("too long")
+	}
+
+	// Check characters.
+	for i := 0; i < len(hash); i++ {
+		if !base32encoding.ValidByte(hash[i]) {
+			return fmt.Errorf("invalid character %q", hash[i])
+		}
+	}
+
+	return nil
 }
 
 // Decode the string geohash to a (lat, lng) point.

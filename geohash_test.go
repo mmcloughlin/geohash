@@ -117,6 +117,31 @@ func TestLeadingZero(t *testing.T) {
 	}
 }
 
+func TestValidateErrors(t *testing.T) {
+	cases := []struct {
+		Hash        string
+		ExpectError string
+	}{
+		{
+			Hash:        "0123456789bcdefghjkmnpqrstuvwxyz",
+			ExpectError: "too long",
+		},
+		{
+			Hash:        "bcopqr",
+			ExpectError: "invalid character 'o'",
+		},
+	}
+	for _, c := range cases {
+		err := Validate(c.Hash)
+		if err == nil {
+			t.Fatalf("%s: got nil, expected %q", c.Hash, c.ExpectError)
+		}
+		if err.Error() != c.ExpectError {
+			t.Errorf("%s: got %q, expected %q", c.Hash, err, c.ExpectError)
+		}
+	}
+}
+
 func TestNeighbors(t *testing.T) {
 	for _, c := range neighborsTestCases {
 		neighbors := Neighbors(c.hashStr)

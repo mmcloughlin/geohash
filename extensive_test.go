@@ -49,6 +49,15 @@ func TestPrefixProperty(t *testing.T) {
 	}
 }
 
+// Verify all string hashes pass validation.
+func TestValidate(t *testing.T) {
+	for _, c := range testcases {
+		if err := Validate(c.hash); err != nil {
+			t.Fatalf("unexpected error for %q: %s", c.hash, err)
+		}
+	}
+}
+
 // Test bounding boxes for string geohashes.
 func TestBoundingBox(t *testing.T) {
 	for _, c := range testcases {
