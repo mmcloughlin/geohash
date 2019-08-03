@@ -133,6 +133,13 @@ func NeighborsIntWithPrecision(hash uint64, bits uint) []uint64
 NeighborsIntWithPrecision returns a slice of uint64s that correspond to the
 provided hash's neighbors at the given precision.
 
+#### func  Validate
+
+```go
+func Validate(hash string) error
+```
+Validate the string geohash.
+
 #### type Box
 
 ```go
