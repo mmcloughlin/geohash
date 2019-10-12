@@ -91,6 +91,33 @@ func TestDecodeInt(t *testing.T) {
 	}
 }
 
+func TestConvertStringToInt(t *testing.T) {
+	for _, c := range testcases {
+		for chars := uint(1); chars <= 12; chars++ {
+			hash := c.hash[:chars]
+			inthash, bits := ConvertStringToInt(hash)
+			expect := c.hashInt >> (64 - bits)
+			if inthash != expect {
+				t.Fatalf("incorrect conversion to integer for %q: got %#x expect %#x", hash, inthash, expect)
+			}
+		}
+	}
+}
+
+func TestConvertIntToString(t *testing.T) {
+	for _, c := range testcases {
+		for chars := uint(1); chars <= 12; chars++ {
+			bits := 5 * chars
+			inthash := c.hashInt >> (64 - bits)
+			hash := ConvertIntToString(inthash, chars)
+			expect := c.hash[:chars]
+			if hash != expect {
+				t.Fatalf("incorrect conversion to string for %#x: got %q expect %q", inthash, hash, expect)
+			}
+		}
+	}
+}
+
 type DecodeTestCase struct {
 	hash string
 	box  Box

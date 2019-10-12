@@ -24,6 +24,23 @@ import "github.com/mmcloughlin/geohash"
 
 ## Usage
 
+#### func  ConvertIntToString
+
+```go
+func ConvertIntToString(hash uint64, chars uint) string
+```
+ConvertIntToString converts an integer geohash to the equivalent string geohash
+with chars characters. The provided integer geohash is interpreted to have
+5*chars bits of precision.
+
+#### func  ConvertStringToInt
+
+```go
+func ConvertStringToInt(hash string) (uint64, uint)
+```
+ConvertStringToInt converts a string geohash to the equivalent integer geohash.
+Returns the integer hash and its precision.
+
 #### func  Decode
 
 ```go
