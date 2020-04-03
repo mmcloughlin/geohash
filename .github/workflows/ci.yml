@@ -20,10 +20,10 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v1
       - name: Test
-        run: go test -v -covermode=count -coverprofile=profile.cov
+        run: go test -v -covermode=count -coverprofile=coverage.out
       - name: Coverage Upload
-        env:
-          COVERALLS_TOKEN: ${{ secrets.COVERALLS_TOKEN }}
-        run: |
-          GO111MODULE=off go get github.com/mattn/goveralls
-          $(go env GOPATH)/bin/goveralls -coverprofile=profile.cov -service=github
+        uses: codecov/codecov-action@v1.0.6
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          file: coverage.out
+          flags: unittests
