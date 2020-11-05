@@ -1,8 +1,8 @@
 language: go
 go:
 - 1.3.x
-- 1.12.x
 - 1.13.x
+- 1.14.x
 - 1.x
 before_install:
 - go get github.com/axw/gocov/gocov
