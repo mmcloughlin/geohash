@@ -39,10 +39,10 @@ jobs:
       - name: Build
         run: go build
       - name: Test
-        run: go test -v -covermode=count -coverprofile=coverage
+        run: go test -v -covermode=count -coverprofile=coverage.txt
       - name: Upload Coverage
         uses: codecov/codecov-action@51d810878be5422784e86451c0e7c14e5860ec47 # v2.0.2
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
-          files: coverage
+          files: coverage.txt
           flags: unittests
