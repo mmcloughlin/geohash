@@ -37,12 +37,12 @@ jobs:
           persist-credentials: false
           path: ${{ env.GOPATH }}/src/github.com/${{ github.repository }}
       - name: Build
-        run: go build ./...
+        run: go build
       - name: Test
-        run: go test -v -covermode=count -coverprofile=coverage.out ./...
+        run: go test -v -covermode=count -coverprofile=coverage
       - name: Upload Coverage
         uses: codecov/codecov-action@51d810878be5422784e86451c0e7c14e5860ec47 # v2.0.2
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
-          files: coverage.out
+          files: coverage
           flags: unittests
