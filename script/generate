@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+set -exuo pipefail
+
+# Update README.
+godocdown -template README.tmpl -o README.md
