@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+set -exuo pipefail
+
+# godocdown: templated documentation generator.
+go install github.com/robertkrimen/godocdown/godocdown@v0.0.0-20130622164427-0bfa04905481
