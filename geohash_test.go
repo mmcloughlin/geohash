@@ -236,3 +236,21 @@ func TestNeighborIntWithPrecision(t *testing.T) {
 		t.Errorf("actual: %v \n expected: %v\n", neighbor, expected)
 	}
 }
+
+func TestEncodeEdges(t *testing.T) {
+	// Latitude 90 hashed as the south pole. Longitude 180 hashed as -180.
+	if got, south := Encode(90, 0), Encode(-90, 0); got == south {
+		t.Fatalf("Encode(90, 0) = %s, the south pole hash", got)
+	}
+	lat, _ := DecodeCenter(Encode(90, 0))
+	if lat < 89 {
+		t.Fatalf("Encode(90, 0) decodes to latitude %v", lat)
+	}
+	if got, west := Encode(0, 180), Encode(0, -180); got == west {
+		t.Fatalf("Encode(0, 180) = %s, the longitude -180 hash", got)
+	}
+	_, lng := DecodeCenter(Encode(0, 180))
+	if lng < 179 {
+		t.Fatalf("Encode(0, 180) decodes to longitude %v", lng)
+	}
+}

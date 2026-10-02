@@ -37,6 +37,22 @@ TEXT ·EncodeInt(SB), NOSPLIT, $0
 	MULSD $(0.002777777777777778), LNGF
 	ADDSD $(1.5), LNGF
 
+	// A result of 2 is latitude 90 or longitude 180. The mantissa trick
+	// only works on [1, 2), so 2.0 shifts down to the low cell. Clamp to
+	// the last value below 2, whose low 32 mantissa bits are all ones.
+	MOVQ $0x4000000000000000, TEMP // 2.0
+	MOVQ TEMP, X2
+	UCOMISD X2, LATF
+	JCS latok
+	MOVQ $0x3fffffffffffffff, TEMP
+	MOVQ TEMP, LATF
+latok:
+	UCOMISD X2, LNGF
+	JCS lngok
+	MOVQ $0x3fffffffffffffff, TEMP
+	MOVQ TEMP, LNGF
+lngok:
+
 	MOVQ LNGF, LNGI
 	SHRQ $20, LNGI
 

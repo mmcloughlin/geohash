@@ -278,6 +278,12 @@ var exp232 = math.Exp2(32)
 // Encode the position of x within the range -r to +r as a 32-bit integer.
 func encodeRange(x, r float64) uint32 {
 	p := (x + r) / (2 * r)
+	// p is 1 at latitude 90 and longitude 180. p*2^32 is 2^32, which does
+	// not fit in a uint32, so the conversion wrapped to 0 and those points
+	// hashed as the opposite edge.
+	if p >= 1 {
+		return math.MaxUint32
+	}
 	return uint32(p * exp232)
 }
 
